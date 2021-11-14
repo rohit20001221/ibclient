@@ -1,20 +1,11 @@
-import React, {
-  createContext,
-  PropsWithChildren,
-  FC,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import React, { createContext, FC, useState, useEffect, useRef } from "react";
 import { env } from "../../env";
 import { MessageParser, WebContextType } from "../types";
 const { ipcRenderer } = window.require("electron");
 
-const WebSocketContext = createContext<WebContextType>({
-  toggleTrade: () => {},
-});
+const WebSocketContext = createContext<WebContextType>(null);
 
-export const WebSocketProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
+export const WebSocketProvider: FC = ({ children }) => {
   const ws = useRef(new WebSocket(env.WS_URL));
 
   const [startTrade, setStartTrade] = useState<boolean>(true);

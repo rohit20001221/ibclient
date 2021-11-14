@@ -1,10 +1,10 @@
 import { OrderStock } from "@stoqey/ibkr";
 
 export interface WebContextType {
-  toggleTrade: Function;
+  toggleTrade: () => void;
 }
 
-export interface WebSocketMessage extends OrderStock {}
+export type WebSocketMessage = OrderStock;
 
 export class MessageParser {
   public static parse(data: string): WebSocketMessage {
