@@ -89,6 +89,7 @@
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.1.0",
     "@mui/material": "^5.1.0",
+    "@mui/styles": "^5.1.1",
     "@stoqey/ibkr": "^1.8.3",
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.2",
