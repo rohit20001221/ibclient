@@ -1,4 +1,11 @@
-import { IBKREVENTS, IbkrEvents, Orders, OrderStock } from "@stoqey/ibkr";
+import {
+  IBKREVENTS,
+  IbkrEvents,
+  Orders,
+  OrderStock,
+  AccountSummary,
+  IBKRAccountSummary,
+} from "@stoqey/ibkr";
 import { app, BrowserWindow, session, ipcMain } from "electron";
 import { setup } from "./lib/preload";
 
@@ -45,6 +52,11 @@ const createWindow = async (): Promise<void> => {
   await setup();
 
   const ibkrEvents = IbkrEvents.Instance;
+  const ibkrAccount = AccountSummary.Instance;
+
+  setInterval(() => {
+    mainWindow.webContents.send("AccountSummary", ibkrAccount.accountSummary);
+  }, 1000);
 
   ibkrEvents.on(IBKREVENTS.ORDER_FILLED, (data) => {
     console.log(data);
@@ -54,7 +66,11 @@ const createWindow = async (): Promise<void> => {
     console.log(data);
   });
 
-  ipcMain.on("trade", async (event, data: OrderStock) => {
+  ibkrEvents.on(IBKREVENTS.ON_ACCOUNT_SUMMARY, (data: IBKRAccountSummary) => {
+    console.log(data.AccountType);
+  });
+
+  ipcMain.on("placeOrder", async (event, data: OrderStock) => {
     const ib = Orders.Instance;
     await ib.placeOrder(data);
   });
