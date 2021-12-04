@@ -90,3 +90,6 @@ out/
 
 # env
 env/
+
+# entities
+.entities/
